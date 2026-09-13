@@ -1,0 +1,20 @@
+# Local originals not used by the site
+视频/
+*.pdf
+!assets/VeloGrad.pdf
+
+# Unused extracted PDF pages
+assets/figures/
+assets/images/
+
+# Chinese-named source photos at repo root (web copies live in assets/web)
+/*.jpg
+/*.jpeg
+/*.png
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
