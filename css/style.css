@@ -454,6 +454,17 @@ section {
   cursor: zoom-in;
 }
 
+.figure-wide {
+  margin-top: 16px;
+  padding: 10px 12px 12px;
+}
+
+.figure-wide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .caption {
   margin: 12px 4px 2px;
   font-size: 13.5px;
@@ -727,6 +738,7 @@ tr.ours td {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
+  align-items: start;
 }
 
 .eq {

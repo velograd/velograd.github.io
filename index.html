@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=65" />
+  <link rel="stylesheet" href="css/style.css?v=66" />
 </head>
 <body>
   <header class="nav">
@@ -440,16 +440,14 @@
             <p class="lede">Offline Cube-Triple isolates critic-training states, actor-query locations, and finite-radius sensitivity supervision. A real-robot USB-insertion ablation uses a fixed dataset from the two Windmill training runs.</p>
           </div>
         </div>
-        <div class="split">
-          <figure class="card figure">
-            <img src="assets/web/fig3-design.png?v=63" alt="Design choice experiments" data-zoom="assets/web/fig3-design.png?v=63" />
-            <figcaption class="caption">Fig. 3 · (a) With Data-Continuous actor queries, Policy-Discrete vs. Data-Continuous critic training is similar. (b) Euler BPTT and DirectQA remain below VeloGrad’s learned velocity-value interface.</figcaption>
-          </figure>
-          <figure class="card figure">
-            <img src="assets/web/fig4-sensitivity.png?v=63" alt="Sensitivity supervision" data-zoom="assets/web/fig4-sensitivity.png?v=63" />
-            <figcaption class="caption">Fig. 4 · Sensitivity supervision lowers directional error and raises Cube-Double/Triple success. Panel (c) varies ε; default ε = 0.1.</figcaption>
-          </figure>
-        </div>
+        <figure class="card figure">
+          <img src="assets/web/fig3-design.png?v=63" alt="Design choice experiments" data-zoom="assets/web/fig3-design.png?v=63" />
+          <figcaption class="caption">Fig. 3 · (a) With Data-Continuous actor queries, Policy-Discrete vs. Data-Continuous critic training is similar. (b) Euler BPTT and DirectQA remain below VeloGrad’s learned velocity-value interface.</figcaption>
+        </figure>
+        <figure class="card figure figure-wide">
+          <img src="assets/web/fig4-sensitivity.png?v=66" alt="Sensitivity supervision" data-zoom="assets/web/fig4-sensitivity.png?v=66" />
+          <figcaption class="caption">Fig. 4 · Sensitivity supervision lowers directional error and raises Cube-Double/Triple success. Panel (c) varies ε; default ε = 0.1.</figcaption>
+        </figure>
         <div class="table-wrap nums" style="margin-top:16px">
           <table>
             <thead>
