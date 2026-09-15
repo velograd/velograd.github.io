@@ -682,6 +682,11 @@ tr.ours td {
   font-weight: 600;
 }
 
+.table-wrap.nums th:nth-child(n + 2),
+.table-wrap.nums td:nth-child(n + 2) {
+  text-align: right;
+}
+
 .bars {
   display: grid;
   gap: 16px;
@@ -694,7 +699,7 @@ tr.ours td {
 
 .bar {
   display: grid;
-  grid-template-columns: 110px 1fr 48px;
+  grid-template-columns: 110px 1fr 58px;
   gap: 10px;
   align-items: center;
   font-size: 13px;

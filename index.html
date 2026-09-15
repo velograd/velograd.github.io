@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css?v=65" />
 </head>
 <body>
   <header class="nav">
@@ -44,7 +44,11 @@
             <a class="btn primary" href="assets/VeloGrad.pdf">Paper PDF</a>
             <span class="btn soon" aria-disabled="true" title="Code coming soon">
               <svg class="gh-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.65 7.65 0 0 1 8 4.77c.68.003 1.36.092 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-              Code (coming soon)
+              Code (OGBench / Robomimic, coming soon)
+            </span>
+            <span class="btn soon" aria-disabled="true" title="Code coming soon">
+              <svg class="gh-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.65 7.65 0 0 1 8 4.77c.68.003 1.36.092 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+              Code (Real robot, coming soon)
             </span>
             <a class="btn" href="#tasks">Real-robot tasks</a>
             <a class="btn ghost" href="#method">Method</a>
@@ -52,9 +56,9 @@
           </div>
           <div class="stats">
             <div class="stat"><div class="stat-num"><em>79.6%</em></div><div class="stat-label">OGBench offline success</div></div>
-            <div class="stat"><div class="stat-num"><em>97.7%</em></div><div class="stat-label">After online adaptation</div></div>
-            <div class="stat"><div class="stat-num"><em>29/30</em></div><div class="stat-label">Flower insertion, disturbed</div></div>
-            <div class="stat"><div class="stat-num"><em>21/30</em></div><div class="stat-label">Windmill activation, E2E</div></div>
+            <div class="stat"><div class="stat-num"><em>98.2%</em></div><div class="stat-label">After online adaptation</div></div>
+            <div class="stat"><div class="stat-num"><em>98.3%</em></div><div class="stat-label">Disturbed flower, 2-run mean</div></div>
+            <div class="stat"><div class="stat-num"><em>71.7%</em></div><div class="stat-label">Windmill E2E, 2-run mean</div></div>
           </div>
         </div>
       </div>
@@ -75,8 +79,8 @@
           </div>
         </div>
         <article class="card abstract">
-          <p>Value-based reinforcement fine-tuning of flow policies must connect final-action values to the local velocities that generate them. We introduce <strong>VeloGrad</strong>, which learns this connection with a velocity-conditioned critic. The critic predicts the action value obtained by applying a candidate velocity for one flow step and completing generation under a frozen copy of the current policy. Since fitting values alone does not directly supervise the derivative used by the actor, we also train directional derivatives against normalized action-value differences from symmetric finite-radius velocity perturbations and their downstream continuations.</p>
-          <p>Actor updates use the learned derivative without backpropagating through the remaining flow solver; deployment uses the standard sampler without critic queries. Experiments cover offline and offline-to-online learning on OGBench and Robomimic. VeloGrad achieves <strong>79.6%</strong> average offline success and <strong>97.7%</strong> after online adaptation across four OGBench domains. On a Piper-X robot, it achieves <strong>29/30</strong> success on disturbed flower insertion and <strong>21/30</strong> autonomous end-to-end success on Windmill Activation, compared with 16/30 for DSRL.</p>
+          <p>Flow policies generate actions through a sequence of velocity updates, so the value of a local velocity choice depends on the remaining generation process. We introduce <strong>VeloGrad</strong>, which learns a velocity-conditioned continuation critic to provide a local derivative signal for reinforcement learning. The critic predicts the value of the action produced by taking one step with a candidate velocity and completing generation with the current policy. To directly train the derivatives used by the actor, we complement value distillation with central-difference supervision from symmetric finite-radius velocity perturbations.</p>
+          <p>Actor updates use the learned derivative without backpropagating through the flow solver; deployment retains standard sampling without critic queries. Experiments cover offline and offline-to-online learning on OGBench and Robomimic, together with real-robot adaptation to target disturbances and multi-stage manipulation. VeloGrad raises average offline success across four OGBench domains from 66.5% with QAM to <strong>79.6%</strong>, and reaches <strong>98.2%</strong> after online adaptation. Over two independent real-robot training runs, it reaches <strong>98.3%</strong> mean success on disturbed flower insertion and improves autonomous end-to-end windmill activation from 53.3% with QAM to <strong>71.7%</strong>.</p>
           <div class="keywords">
             <span>Flow matching</span>
             <span>Reinforcement learning</span>
@@ -111,7 +115,7 @@
           <div class="sec-no">02 / REAL ROBOT</div>
           <div>
             <h2>Three fine-grained manipulation tasks.</h2>
-            <p class="lede">A Piper-X robot with wrist and third-person RGB cameras, running at 25 Hz with chunked Cartesian control. Policy videos compare BC Init, HG-DAgger, and VeloGrad. For Windmill Activation, we compare only USB insertion and show the full VeloGrad episode separately.</p>
+            <p class="lede">A Piper-X robot with wrist and third-person RGB cameras, running at 25 Hz with chunked Cartesian control. Real-robot scores below are two-run means (30 autonomous trials per run). Policy videos compare BC Init, HG-DAgger, and VeloGrad. For Windmill Activation, we compare only USB insertion and show the full VeloGrad episode separately.</p>
           </div>
         </div>
 
@@ -131,8 +135,8 @@
         <div class="task-panel active" id="task-flower">
           <div class="task-meta">
             <span>H = 16</span>
-            <span>Static 29/30</span>
-            <span>Disturbed vase 29/30</span>
+            <span>Static 95.0% (29, 28)</span>
+            <span>Disturbed 98.3% (29, 30)</span>
             <span>400-step budget</span>
           </div>
           <p>The robot starts holding a flower. The vase is randomized in a 10 cm × 10 cm region. The policy must visually align the stem with the opening and complete insertion. In the disturbed protocol, the vase is displaced once as the arm begins to move.</p>
@@ -183,7 +187,7 @@
         <div class="task-panel" id="task-puck">
           <div class="task-meta">
             <span>H = 16</span>
-            <span>13/30 autonomous</span>
+            <span>46.7% (13, 15)</span>
             <span>Elastic-band launch</span>
             <span>500-step budget</span>
           </div>
@@ -230,7 +234,7 @@
         <div class="task-panel" id="task-windmill">
           <div class="task-meta">
             <span>H = 32</span>
-            <span>E2E 21/30</span>
+            <span>E2E 71.7% (21, 22)</span>
             <span>USB → tray → windmill</span>
             <span>1000-step budget</span>
           </div>
@@ -243,12 +247,12 @@
           </div>
           <p class="clip-label">USB insertion <span>· critical contact phase</span></p>
           <div class="video-compare">
-            <div class="video-slot" data-src="assets/videos/windmill-plug-bc.mp4">
+            <div class="video-slot" data-src="assets/videos/windmill-plug-bc.mp4?v=63">
               <span class="badge">BC Init</span>
               <video muted defaultMuted loop playsinline></video>
               <div class="placeholder"></div>
             </div>
-            <div class="video-slot" data-src="assets/videos/windmill-plug-hgdagger.mp4">
+            <div class="video-slot" data-src="assets/videos/windmill-plug-hgdagger.mp4?v=63">
               <span class="badge">HG-DAgger</span>
               <video muted defaultMuted loop playsinline></video>
               <div class="placeholder"></div>
@@ -273,8 +277,8 @@
           </div>
         </div>
         <figure class="card figure">
-          <img src="assets/web/fig1-method.png" alt="VeloGrad architecture" data-zoom="assets/web/fig1-method.png" />
-          <figcaption class="caption">Overview. Top: the actor collects transitions with optional human intervention. Bottom: the learner trains a velocity critic on frozen flow continuations and updates the flow policy with ∇<sub>u</sub>Q<sup>v</sup>.</figcaption>
+          <img src="assets/web/fig1-method.png?v=63" alt="VeloGrad architecture" data-zoom="assets/web/fig1-method.png?v=63" />
+          <figcaption class="caption">Fig. 1 · Overview. Top: the actor collects transitions with optional human intervention. Bottom: the learner trains a velocity critic on frozen flow continuations from replay interpolants x<sub>t</sub> = (1 − t)x<sub>0</sub> + t a<sub>D</sub> and updates the flow policy with ∇<sub>u</sub>Q<sup>v</sup>.</figcaption>
         </figure>
         <div class="method-steps">
           <article class="card">
@@ -310,7 +314,7 @@
           <div class="sec-no">04 / SIMULATION</div>
           <div>
             <h2>Stronger offline learning, then near-ceiling online adaptation.</h2>
-            <p class="lede">OGBench: Scene, Puzzle-3×3, Cube-Double, Cube-Triple. Robomimic MH: Lift, Can, Square, Transport. 1M offline steps, then 1M environment steps of O2O.</p>
+            <p class="lede">OGBench: Scene, Puzzle-3×3, Cube-Double, Cube-Triple. Robomimic MH: Lift, Can, Square, Transport. 1M offline steps, then 1M environment steps of O2O. OGBench means over 12 seeds; Robomimic over 4.</p>
           </div>
         </div>
         <div class="table-wrap">
@@ -327,28 +331,31 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td rowspan="5">Offline</td><td>DAC</td><td>71.8</td><td>72.3</td><td>38.7</td><td>2.1</td><td>46.2</td></tr>
+              <tr><td rowspan="7">Offline</td><td>DAC</td><td>71.8</td><td>72.3</td><td>38.7</td><td>2.1</td><td>46.2</td></tr>
               <tr><td>DSRL</td><td>99.9</td><td>85.0</td><td>75.5</td><td>1.6</td><td>65.5</td></tr>
               <tr><td>QAM</td><td>97.0</td><td>100.0</td><td>64.3</td><td>4.8</td><td>66.5</td></tr>
               <tr><td>QC-FQL</td><td>83.5</td><td>54.1</td><td>41.7</td><td>4.2</td><td>45.9</td></tr>
+              <tr><td>FlowDPG</td><td>95.8</td><td>95.7</td><td>68.8</td><td>11.7</td><td>68.0</td></tr>
+              <tr><td>VINE†</td><td>73</td><td>95</td><td>4</td><td>1</td><td>43</td></tr>
               <tr class="ours"><td>VeloGrad</td><td>98.0</td><td>100.0</td><td>75.8</td><td>44.7</td><td>79.6</td></tr>
-              <tr><td rowspan="6">O2O</td><td>DAC</td><td>97.7</td><td>38.0</td><td>99.7</td><td>34.8</td><td>67.5</td></tr>
+              <tr><td rowspan="7">O2O</td><td>DAC</td><td>97.7</td><td>38.0</td><td>99.7</td><td>34.8</td><td>67.5</td></tr>
               <tr><td>DSRL</td><td>100.0</td><td>84.8</td><td>99.9</td><td>0.6</td><td>71.3</td></tr>
               <tr><td>QAM</td><td>99.6</td><td>100.0</td><td>99.9</td><td>79.4</td><td>94.7</td></tr>
               <tr><td>QC-FQL</td><td>99.0</td><td>100.0</td><td>99.7</td><td>58.1</td><td>89.2</td></tr>
+              <tr><td>FlowDPG</td><td>99.5</td><td>100.0</td><td>99.9</td><td>76.8</td><td>94.0</td></tr>
               <tr><td>RLPD</td><td>92.8</td><td>100.0</td><td>98.7</td><td>40.0</td><td>82.9</td></tr>
-              <tr class="ours"><td>VeloGrad</td><td>98.0</td><td>100.0</td><td>99.6</td><td>93.4</td><td>97.7</td></tr>
+              <tr class="ours"><td>VeloGrad</td><td>99.9</td><td>100.0</td><td>99.6</td><td>93.4</td><td>98.2</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="caption">Table I · OGBench success (%) after 1M offline gradient steps and 1M additional environment steps. Mean over 12 seeds. Largest offline gap is Cube-Triple: 44.7% vs. 4.8% for QAM.</p>
+        <p class="caption">Table I · OGBench success (%) after 1M offline gradient steps and 1M additional environment steps. Mean over 12 seeds. VINE† is cited from the original paper. Largest offline gap is Cube-Triple: 44.7% vs. 11.7% for FlowDPG and 4.8% for QAM.</p>
         <figure class="card figure" style="margin-top:18px">
-          <img src="assets/web/fig2-robomimic.png" alt="Robomimic success curves" data-zoom="assets/web/fig2-robomimic.png" />
-          <figcaption class="caption">Fig. 2 · Robomimic MH success, averaged over Lift, Can, Square, and Transport. Shading is offline training; the dashed line marks the start of online adaptation. VeloGrad reaches 96.7% after O2O vs. 76.6% for DSRL.</figcaption>
+          <img src="assets/web/fig2-robomimic.png?v=63" alt="Robomimic success curves" data-zoom="assets/web/fig2-robomimic.png?v=63" />
+          <figcaption class="caption">Fig. 2 · Robomimic multi-human success with low-dimensional observations, averaged over Lift, Can, Square, and Transport. Gray marks offline training; the dashed line starts online adaptation. VeloGrad reaches 96.7% after O2O vs. 76.6% for DSRL.</figcaption>
         </figure>
         <div class="takeaway">
           <strong>Takeaway</strong>
-          The method’s largest simulation gains appear where generation is hard: Cube-Triple offline, and Transport after online adaptation (92.3% vs. 25.2% for QC-FQL).
+          The method’s largest simulation gains appear where generation is hard: Cube-Triple offline (44.7% vs. 11.7% FlowDPG), then 98.2% average OGBench success after online adaptation.
         </div>
       </div>
     </section>
@@ -358,32 +365,32 @@
         <div class="section-head">
           <div class="sec-no">05 / REAL-WORLD RL</div>
           <div>
-            <h2>100 online trajectories. Highest success in every condition.</h2>
-            <p class="lede">10 teleop demonstrations, 30k-step flow-matching pretraining, then human-in-the-loop offline-to-online RL. Success is fully autonomous, 30 trials per checkpoint.</p>
+            <h2>Two independent runs. Highest mean success in every condition.</h2>
+            <p class="lede">10 teleop demonstrations, 30k-step flow-matching pretraining, then human-in-the-loop offline-to-online RL. Each method is trained twice with 100 online trajectories; each checkpoint uses 30 autonomous trials per run.</p>
           </div>
         </div>
         <figure class="card figure">
-          <img src="assets/web/fig5-tasks.jpg" alt="Three Piper-X tasks" data-zoom="assets/web/fig5-tasks.jpg" />
-          <figcaption class="caption">Fig. 5 · Piper-X tasks at representative stages: Windmill Activation, Flower Insertion, and Elastic Puck Launching.</figcaption>
+          <img src="assets/web/fig5-tasks.jpg?v=63" alt="Three Piper-X tasks" data-zoom="assets/web/fig5-tasks.jpg?v=63" />
+          <figcaption class="caption">Fig. 5 · Piper-X tasks at representative stages: Flower Insertion, Elastic Puck Launching, and Windmill Activation.</figcaption>
         </figure>
         <div class="split" style="margin-top:16px">
           <div class="card" style="padding:22px">
             <div class="bars">
               <div class="bar-row">
                 <h4>Flower · Static</h4>
-                <div class="bar"><span>BC Init</span><div class="track"><div class="fill" style="width:27%"></div></div><span>8/30</span></div>
-                <div class="bar"><span>HG-DAgger</span><div class="track"><div class="fill" style="width:70%"></div></div><span>21/30</span></div>
-                <div class="bar"><span>DSRL</span><div class="track"><div class="fill" style="width:80%"></div></div><span>24/30</span></div>
-                <div class="bar"><span>QAM</span><div class="track"><div class="fill" style="width:87%"></div></div><span>26/30</span></div>
-                <div class="bar ours"><span>VeloGrad</span><div class="track"><div class="fill" style="width:97%"></div></div><span>29/30</span></div>
+                <div class="bar"><span>BC Init</span><div class="track"><div class="fill" style="width:31.7%"></div></div><span>31.7%</span></div>
+                <div class="bar"><span>HG-DAgger</span><div class="track"><div class="fill" style="width:68.3%"></div></div><span>68.3%</span></div>
+                <div class="bar"><span>DSRL</span><div class="track"><div class="fill" style="width:70%"></div></div><span>70.0%</span></div>
+                <div class="bar"><span>QAM</span><div class="track"><div class="fill" style="width:90%"></div></div><span>90.0%</span></div>
+                <div class="bar ours"><span>VeloGrad</span><div class="track"><div class="fill" style="width:95%"></div></div><span>95.0%</span></div>
               </div>
               <div class="bar-row">
                 <h4>Flower · Disturbed</h4>
-                <div class="bar"><span>BC Init</span><div class="track"><div class="fill" style="width:10%"></div></div><span>3/30</span></div>
-                <div class="bar"><span>HG-DAgger</span><div class="track"><div class="fill" style="width:77%"></div></div><span>23/30</span></div>
-                <div class="bar"><span>DSRL</span><div class="track"><div class="fill" style="width:23%"></div></div><span>7/30</span></div>
-                <div class="bar"><span>QAM</span><div class="track"><div class="fill" style="width:77%"></div></div><span>23/30</span></div>
-                <div class="bar ours"><span>VeloGrad</span><div class="track"><div class="fill" style="width:97%"></div></div><span>29/30</span></div>
+                <div class="bar"><span>BC Init</span><div class="track"><div class="fill" style="width:8.3%"></div></div><span>8.3%</span></div>
+                <div class="bar"><span>HG-DAgger</span><div class="track"><div class="fill" style="width:68.3%"></div></div><span>68.3%</span></div>
+                <div class="bar"><span>DSRL</span><div class="track"><div class="fill" style="width:31.7%"></div></div><span>31.7%</span></div>
+                <div class="bar"><span>QAM</span><div class="track"><div class="fill" style="width:83.3%"></div></div><span>83.3%</span></div>
+                <div class="bar ours"><span>VeloGrad</span><div class="track"><div class="fill" style="width:98.3%"></div></div><span>98.3%</span></div>
               </div>
             </div>
           </div>
@@ -391,34 +398,35 @@
             <div class="bars">
               <div class="bar-row">
                 <h4>Elastic Puck</h4>
-                <div class="bar"><span>BC Init</span><div class="track"><div class="fill" style="width:0%"></div></div><span>0/30</span></div>
-                <div class="bar"><span>HG-DAgger</span><div class="track"><div class="fill" style="width:30%"></div></div><span>9/30</span></div>
-                <div class="bar"><span>DSRL</span><div class="track"><div class="fill" style="width:27%"></div></div><span>8/30</span></div>
-                <div class="bar"><span>QAM</span><div class="track"><div class="fill" style="width:33%"></div></div><span>10/30</span></div>
-                <div class="bar ours"><span>VeloGrad</span><div class="track"><div class="fill" style="width:43%"></div></div><span>13/30</span></div>
+                <div class="bar"><span>BC Init</span><div class="track"><div class="fill" style="width:1.7%"></div></div><span>1.7%</span></div>
+                <div class="bar"><span>HG-DAgger</span><div class="track"><div class="fill" style="width:25%"></div></div><span>25.0%</span></div>
+                <div class="bar"><span>DSRL</span><div class="track"><div class="fill" style="width:28.3%"></div></div><span>28.3%</span></div>
+                <div class="bar"><span>QAM</span><div class="track"><div class="fill" style="width:28.3%"></div></div><span>28.3%</span></div>
+                <div class="bar ours"><span>VeloGrad</span><div class="track"><div class="fill" style="width:46.7%"></div></div><span>46.7%</span></div>
               </div>
               <div class="bar-row">
                 <h4>Windmill E2E</h4>
-                <div class="bar"><span>BC Init</span><div class="track"><div class="fill" style="width:0%"></div></div><span>0/30</span></div>
-                <div class="bar"><span>HG-DAgger</span><div class="track"><div class="fill" style="width:23%"></div></div><span>7/30</span></div>
-                <div class="bar"><span>DSRL</span><div class="track"><div class="fill" style="width:53%"></div></div><span>16/30</span></div>
-                <div class="bar"><span>QAM</span><div class="track"><div class="fill" style="width:50%"></div></div><span>15/30</span></div>
-                <div class="bar ours"><span>VeloGrad</span><div class="track"><div class="fill" style="width:70%"></div></div><span>21/30</span></div>
+                <div class="bar"><span>BC Init</span><div class="track"><div class="fill" style="width:0%"></div></div><span>0.0%</span></div>
+                <div class="bar"><span>HG-DAgger</span><div class="track"><div class="fill" style="width:28.3%"></div></div><span>28.3%</span></div>
+                <div class="bar"><span>DSRL</span><div class="track"><div class="fill" style="width:45%"></div></div><span>45.0%</span></div>
+                <div class="bar"><span>QAM</span><div class="track"><div class="fill" style="width:53.3%"></div></div><span>53.3%</span></div>
+                <div class="bar ours"><span>VeloGrad</span><div class="track"><div class="fill" style="width:71.7%"></div></div><span>71.7%</span></div>
               </div>
             </div>
           </div>
         </div>
+        <p class="caption">Table V · Final autonomous success over two training runs (30 trials per run). VeloGrad averages 77.9% across the four conditions vs. 63.8% for QAM.</p>
         <figure class="card figure" style="margin-top:16px">
-          <img src="assets/web/fig6-online.png" alt="Online adaptation curves" data-zoom="assets/web/fig6-online.png" />
-          <figcaption class="caption">Fig. 6 · Checkpoints at 25 / 50 / 75 / 100 online episodes, 30 autonomous trials each. VeloGrad keeps improving through the final checkpoint on Flower-Disturbed and Windmill E2E.</figcaption>
+          <img src="assets/web/fig6-online.png?v=63" alt="Online adaptation curves" data-zoom="assets/web/fig6-online.png?v=63" />
+          <figcaption class="caption">Fig. 6 · Autonomous success on Flower Disturbed, Puck, and Windmill E2E. Checkpoints after 25 / 50 / 75 / 100 online trajectories, 30 trials per run. Lines are two-run means; shading is the run-to-run range.</figcaption>
         </figure>
         <figure class="card figure" style="margin-top:16px">
-          <img src="assets/web/fig7-windmill.png" alt="Windmill stage success and interventions" data-zoom="assets/web/fig7-windmill.png" />
-          <figcaption class="caption">Fig. 7 · Windmill diagnostics. (a) Stage-wise autonomous success. (b) Human-correction rates over 100 training trajectories. USB insertion required corrections on 38/100 trajectories for VeloGrad vs. 82/100 for HG-DAgger.</figcaption>
+          <img src="assets/web/fig7-windmill.png?v=63" alt="Windmill stage success and corrections" data-zoom="assets/web/fig7-windmill.png?v=63" />
+          <figcaption class="caption">Fig. 7 · Windmill diagnostics over two training runs. (a) Stage-wise autonomous success on 30 final-checkpoint trials per run. (b) Fraction of 100 online trajectories with human correction. Bars are two-run means; whiskers show ranges.</figcaption>
         </figure>
         <div class="takeaway">
           <strong>Takeaway</strong>
-          Disturbed flower insertion is the largest real-robot gap: 29/30 vs. 23/30 for both QAM and HG-DAgger. On the long-horizon windmill task, VeloGrad is strongest on USB insertion and the final grasp-and-rotate stage.
+          The largest gains over QAM are on Puck (46.7% vs. 28.3%) and Windmill E2E (71.7% vs. 53.3%). Disturbed flower insertion reaches 98.3% vs. 83.3% for QAM. VeloGrad leads both insertion stages; QAM is slightly higher on sand-tray positioning.
         </div>
       </div>
     </section>
@@ -429,22 +437,39 @@
           <div class="sec-no">06 / ABLATION</div>
           <div>
             <h2>The local interface is not interchangeable with BPTT or proxy Q.</h2>
-            <p class="lede">Offline Cube-Triple isolates query-state construction, actor-update variants, and finite-radius sensitivity supervision.</p>
+            <p class="lede">Offline Cube-Triple isolates critic-training states, actor-query locations, and finite-radius sensitivity supervision. A real-robot USB-insertion ablation uses a fixed dataset from the two Windmill training runs.</p>
           </div>
         </div>
         <div class="split">
           <figure class="card figure">
-            <img src="assets/web/fig3-design.png" alt="Design choice experiments" data-zoom="assets/web/fig3-design.png" />
-            <figcaption class="caption">Fig. 3 · (a) Data-Continuous actor queries outperform discrete constructions. (b) DirectQA, DirectQANorm, and full-chain BPTT all remain below VeloGrad.</figcaption>
+            <img src="assets/web/fig3-design.png?v=63" alt="Design choice experiments" data-zoom="assets/web/fig3-design.png?v=63" />
+            <figcaption class="caption">Fig. 3 · (a) With Data-Continuous actor queries, Policy-Discrete vs. Data-Continuous critic training is similar. (b) Euler BPTT and DirectQA remain below VeloGrad’s learned velocity-value interface.</figcaption>
           </figure>
           <figure class="card figure">
-            <img src="assets/web/fig4-sensitivity.png" alt="Sensitivity supervision" data-zoom="assets/web/fig4-sensitivity.png" />
-            <figcaption class="caption">Fig. 4 · Sensitivity supervision lowers directional error across flow time and improves aggregate Cube-Double / Cube-Triple success. Default ε = 0.1.</figcaption>
+            <img src="assets/web/fig4-sensitivity.png?v=63" alt="Sensitivity supervision" data-zoom="assets/web/fig4-sensitivity.png?v=63" />
+            <figcaption class="caption">Fig. 4 · Sensitivity supervision lowers directional error and raises Cube-Double/Triple success. Panel (c) varies ε; default ε = 0.1.</figcaption>
           </figure>
         </div>
+        <div class="table-wrap nums" style="margin-top:16px">
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Success (%) ↑</th>
+                <th>Length (steps) ↓</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>BC</td><td>43.3</td><td>295.3</td></tr>
+              <tr><td>VeloGrad w/o sensitivity</td><td>75.0</td><td>232.1</td></tr>
+              <tr class="ours"><td>VeloGrad</td><td>81.7</td><td>219.7</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption">Table VI · Autonomous USB insertion after 50,000 offline actor updates on a fixed dataset of 200 Windmill Stage-1 episodes. Episode lengths are averaged over successful trials.</p>
         <div class="takeaway">
           <strong>Takeaway</strong>
-          Replay-anchored continuous-time queries, a learned velocity critic, and finite-radius derivative matching are all load-bearing. Per-step training cost matches QAM; sensitivity adds 16.2% overhead.
+          Replay-anchored continuous-time actor queries, a learned velocity critic, and finite-radius derivative matching are all load-bearing. Per-step training cost matches QAM; sensitivity adds 16.2% overhead. On real USB insertion, sensitivity adds 6.7 points and shortens successful episodes.
         </div>
       </div>
     </section>
